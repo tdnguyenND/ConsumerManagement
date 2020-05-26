@@ -6,14 +6,20 @@ import javax.persistence.*;
 @Table(name = "fund")
 public class Fund {
     @Id
-    @Column(name = "fund_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "fund_id", nullable = false)
     private int fundId;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String owner;
 
-    @Column(name = "date_of_creation")
+    @Column(name = "date_of_creation", nullable = false)
     private String dateOfCreation;
+
+    @Column(nullable = false)
     private double balance;
 
     public int getFundId() {

@@ -5,17 +5,22 @@ import javax.persistence.*;
 @Entity
 public class User {
     @Id
+    @Column(nullable = false)
     private String username;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = true)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = false)
     private String gender;
+
+    @Column(nullable = false)
     private String email;
 
     public String getUsername() {
