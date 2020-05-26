@@ -1,27 +1,36 @@
 package com.example.ConsumerManagement.models.persistence.entities;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "transaction")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "transaction_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transaction_id", nullable = false)
     private int transactionId;
 
-    @Column(name = "fund_id")
+    @Column(name = "fund_id", nullable = false)
     private int fundId;
 
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String type;
+
+    @Column(nullable = false)
     private String actor;
     
-    @Column(name = "amount_of_money")
+    @Column(name = "amount_of_money", nullable = false)
     private double amountOfMoney;
+
+    @Column(nullable = true)
     private String note;
 
-    @Column(name = "date_of_creation")
+    @Column(name = "date_of_creation", nullable = false)
     private String dateOfCreation;
 
     public int getTransactionId() {
@@ -76,7 +85,7 @@ public class Transaction {
         return note;
     }
 
-    public void setNote(String note) {
+    public void setNote(@Nullable String note) {
         this.note = note;
     }
 
