@@ -14,4 +14,6 @@ public interface FundService {
     String findOwnerByFundId(Integer fundId);
 
     void changeOwner(Integer fundId, String newOwner);
+
+    boolean isExist(Integer id);
 }

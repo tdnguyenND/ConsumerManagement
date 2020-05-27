@@ -77,4 +77,11 @@ class FundServiceTest {
         fundService.changeOwner(1, newOwner);
         assertEquals(fundService.findOwnerByFundId(1), newOwner);
     }
+
+    @Test
+    @Sql("/data.sql")
+    void isExist() {
+        assertTrue(fundService.isExist(1));
+        assertFalse(fundService.isExist(-1));
+    }
 }
