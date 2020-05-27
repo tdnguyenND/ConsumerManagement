@@ -15,17 +15,19 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public Optional<User> findById(String s) {
-        return userRepository.findById(s);
+    public Optional<User> findById(String username) {
+        Optional<User> user = userRepository.findById(username);
+        return user;
     }
 
     @Override
-    public <S extends User> S save(S s) {
-        return null;
+    public <S extends User> S save(S user) {
+        return (S) userRepository.save(user);
     }
 
     @Override
     public boolean isExist(String username) {
-        return false;
+        if( findById(username) == null) return  false;
+        return true;
     }
 }

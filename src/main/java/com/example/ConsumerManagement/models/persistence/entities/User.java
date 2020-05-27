@@ -3,9 +3,10 @@ package com.example.ConsumerManagement.models.persistence.entities;
 import javax.persistence.*;
 
 @Entity
+@Table(name ="user")
 public class User {
     @Id
-    @Column(nullable = false)
+    @Column(name = "username", nullable = false)
     private String username;
 
     @Column(name = "first_name", nullable = true)
@@ -14,13 +15,16 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(name = "gender",nullable = false)
     private String gender;
 
-    @Column(nullable = false)
+    @Column(name = "email",nullable = false)
     private String email;
 
     public String getUsername() {
@@ -69,5 +73,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
