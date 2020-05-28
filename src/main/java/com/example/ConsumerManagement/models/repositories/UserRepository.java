@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, String> {
 
-    User save (User user);
+    @Override
+    <S extends User> S save(S s);
+
     Optional<User> findById(String username);
 }
