@@ -25,7 +25,7 @@ public class Transaction {
     private String actor;
     
     @Column(name = "amount_of_money", nullable = false)
-    private double amountOfMoney;
+    private Double amountOfMoney;
 
     @Column(nullable = true)
     private String note;
@@ -41,11 +41,11 @@ public class Transaction {
         this.transactionId = transactionId;
     }
 
-    public int getFundId() {
+    public Integer getFundId() {
         return fundId;
     }
 
-    public void setFundId(int fundId) {
+    public void setFundId(Integer fundId) {
         this.fundId = fundId;
     }
 
@@ -73,11 +73,11 @@ public class Transaction {
         this.actor = actor;
     }
 
-    public double getAmountOfMoney() {
+    public Double getAmountOfMoney() {
         return amountOfMoney;
     }
 
-    public void setAmountOfMoney(double amountOfMoney) {
+    public void setAmountOfMoney(Double amountOfMoney) {
         this.amountOfMoney = amountOfMoney;
     }
 
