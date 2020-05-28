@@ -10,10 +10,10 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id", nullable = false)
-    private int transactionId;
+    private Integer transactionId;
 
     @Column(name = "fund_id", nullable = false)
-    private int fundId;
+    private Integer fundId;
 
     @Column(nullable = false)
     private String name;
@@ -33,11 +33,11 @@ public class Transaction {
     @Column(name = "date_of_creation", nullable = false)
     private String dateOfCreation;
 
-    public int getTransactionId() {
+    public Integer getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(int transactionId) {
+    public void setTransactionId(Integer transactionId) {
         this.transactionId = transactionId;
     }
 

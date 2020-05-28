@@ -8,7 +8,7 @@ public class Fund {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fund_id", nullable = false)
-    private int fundId;
+    private Integer fundId;
 
     @Column(nullable = false)
     private String name;
@@ -22,11 +22,11 @@ public class Fund {
     @Column(nullable = false)
     private double balance;
 
-    public int getFundId() {
+    public Integer getFundId() {
         return fundId;
     }
 
-    public void setFundId(int fundId) {
+    public void setFundId(Integer fundId) {
         this.fundId = fundId;
     }
 
