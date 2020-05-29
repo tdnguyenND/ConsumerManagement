@@ -1,10 +1,15 @@
 package com.example.ConsumerManagement.checker;
 
 public abstract class CheckerDecorator implements Checker {
-    private Checker chain;
+    private CheckerDecorator chain;
 
-    public void setChain(Checker chain) {
+    public void setChain(CheckerDecorator chain) {
         this.chain = chain;
+    }
+
+    public void appendChain(CheckerDecorator checker){
+        if (this.chain == null) setChain(checker);
+        else this.chain.appendChain(checker);
     }
 
     @Override
