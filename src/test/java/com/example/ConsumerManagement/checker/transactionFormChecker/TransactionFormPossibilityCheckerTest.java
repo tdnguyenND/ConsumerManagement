@@ -4,12 +4,13 @@ import com.example.ConsumerManagement.models.persistence.entities.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Component
+@SpringBootTest
 @Sql("/data.sql")
 class TransactionFormPossibilityCheckerTest {
     @Autowired
@@ -23,7 +24,7 @@ class TransactionFormPossibilityCheckerTest {
         transactionFormPossibilityChecker.setTransaction(transaction);
 
         transaction.setNote("a");
-        transaction.setAmountOfMoney(10);
+        transaction.setAmountOfMoney(10.0);
         transaction.setActor("tdnguyen.uet");
         transaction.setType("reduce");
         transaction.setName("ac");
@@ -34,9 +35,9 @@ class TransactionFormPossibilityCheckerTest {
     @Test
     void payMoreMoneyThanFundHas(){
         transaction.setType("reduce");
-        transaction.setAmountOfMoney(10000000);
+        transaction.setAmountOfMoney(10000000.0);
 
-        assertTrue(transactionFormPossibilityChecker.satisfy());
+        assertFalse(transactionFormPossibilityChecker.satisfy());
     }
 
     @Test

@@ -4,11 +4,13 @@ import com.example.ConsumerManagement.models.persistence.entities.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Component;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Component
+@SpringBootTest
 class TransactionFormValidityCheckerTest {
     @Autowired
     TransactionFormValidityChecker transactionFormValidityChecker;
@@ -21,7 +23,7 @@ class TransactionFormValidityCheckerTest {
         transactionFormValidityChecker.setTransaction(transaction);
 
         transaction.setNote("a");
-        transaction.setAmountOfMoney(10);
+        transaction.setAmountOfMoney(10.0);
         transaction.setActor("tdnguyen.uet");
         transaction.setType("reduce");
         transaction.setName("ac");
@@ -43,7 +45,7 @@ class TransactionFormValidityCheckerTest {
 
     @Test
     void amountOfMoneyIs0(){
-        transaction.setAmountOfMoney(0);
+        transaction.setAmountOfMoney(0.0);
         assertTrue(transactionFormValidityChecker.satisfy());
     }
 
@@ -55,7 +57,7 @@ class TransactionFormValidityCheckerTest {
 
     @Test
     void nameIsNull(){
-        transaction.setNote(null);
+        transaction.setName(null);
         assertFalse(transactionFormValidityChecker.satisfy());
     }
 

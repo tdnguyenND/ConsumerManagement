@@ -11,7 +11,7 @@ public class FundTreasurerAuthenticityChecker extends FundAuthenticityChecker {
 
     @Override
     public boolean satisfy() {
-        //impl
-        return super.satisfy();
+        String owner = fundService.findById(fundId).get().getOwner();
+        return owner.equals(username);
     }
 }

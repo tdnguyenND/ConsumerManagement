@@ -11,7 +11,9 @@ public class FundMemberAuthenticityChecker extends FundAuthenticityChecker {
 
     @Override
     public boolean satisfy() {
-        //impl
-        return super.satisfy();
+        for(String username: userFundService.findAllMembersByFundId(fundId)){
+            if (username.equals(this.username)) return true;
+        }
+        return false;
     }
 }

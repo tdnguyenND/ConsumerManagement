@@ -22,8 +22,5 @@ class FundTreasurerAuthenticityCheckerTest {
 
         fundTreasurerAuthenticityChecker.setFundId(3);
         assertFalse(fundTreasurerAuthenticityChecker.satisfy());
-
-        fundTreasurerAuthenticityChecker.setFundId(2);
-        assertFalse(fundTreasurerAuthenticityChecker.satisfy());
     }
 }

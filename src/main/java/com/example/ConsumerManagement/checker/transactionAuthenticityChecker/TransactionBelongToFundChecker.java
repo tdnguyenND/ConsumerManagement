@@ -12,7 +12,7 @@ public class TransactionBelongToFundChecker extends TransactionAuthenticityCheck
 
     @Override
     public boolean satisfy() {
-        //impl
-        return super.satisfy();
+        int realFundId = transactionService.findById(transactionId).get().getFundId();
+        return realFundId == fundId;
     }
 }

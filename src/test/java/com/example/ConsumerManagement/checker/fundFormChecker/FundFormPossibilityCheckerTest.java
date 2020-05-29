@@ -22,7 +22,7 @@ class FundFormPossibilityCheckerTest {
         checker.setFund(fund);
 
         fund.setName("abd");
-        fund.setBalance(1);
+        fund.setBalance(1.0);
         fund.setOwner("tdnguyen.uet");
         fund.setDateOfCreation("2050-03-01");
     }
@@ -39,7 +39,7 @@ class FundFormPossibilityCheckerTest {
 
     @Test
     void balanceIsNegative(){
-        fund.setBalance(-1);
+        fund.setBalance(-1.0);
         assertFalse(checker.satisfy());
     }
 }

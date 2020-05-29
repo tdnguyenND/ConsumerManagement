@@ -20,7 +20,7 @@ class FundFormValidityCheckerTest {
         fund = new Fund();
         fundFormValidityChecker.setFund(fund);
         fund.setName("abd");
-        fund.setBalance(1);
+        fund.setBalance(1.0);
         fund.setOwner("tdnguyen.uet");
         fund.setDateOfCreation("2050-03-01");
     }
