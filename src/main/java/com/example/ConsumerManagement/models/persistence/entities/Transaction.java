@@ -10,10 +10,10 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id", nullable = false)
-    private int transactionId;
+    private Integer transactionId;
 
     @Column(name = "fund_id", nullable = false)
-    private int fundId;
+    private Integer fundId;
 
     @Column(nullable = false)
     private String name;
@@ -25,7 +25,7 @@ public class Transaction {
     private String actor;
     
     @Column(name = "amount_of_money", nullable = false)
-    private double amountOfMoney;
+    private Double amountOfMoney;
 
     @Column(nullable = true)
     private String note;
@@ -33,19 +33,19 @@ public class Transaction {
     @Column(name = "date_of_creation", nullable = false)
     private String dateOfCreation;
 
-    public int getTransactionId() {
+    public Integer getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(int transactionId) {
+    public void setTransactionId(Integer transactionId) {
         this.transactionId = transactionId;
     }
 
-    public int getFundId() {
+    public Integer getFundId() {
         return fundId;
     }
 
-    public void setFundId(int fundId) {
+    public void setFundId(Integer fundId) {
         this.fundId = fundId;
     }
 
@@ -73,11 +73,11 @@ public class Transaction {
         this.actor = actor;
     }
 
-    public double getAmountOfMoney() {
+    public Double getAmountOfMoney() {
         return amountOfMoney;
     }
 
-    public void setAmountOfMoney(double amountOfMoney) {
+    public void setAmountOfMoney(Double amountOfMoney) {
         this.amountOfMoney = amountOfMoney;
     }
 

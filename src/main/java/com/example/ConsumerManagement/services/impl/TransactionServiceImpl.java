@@ -16,21 +16,21 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public <S extends Transaction> S save(S s) {
-        return null;
+        return transactionRepository.save(s);
     }
 
     @Override
     public Optional<Transaction> findById(Integer integer) {
-        return Optional.empty();
+        return transactionRepository.findById(integer);
     }
 
     @Override
     public void deleteByFundId(int fundId) {
-
+        transactionRepository.deleteById(fundId);
     }
 
     @Override
     public Iterable<Transaction> findAllByFundId(int fundId) {
-        return null;
+        return transactionRepository.findAllByFundId(fundId);
     }
 }
