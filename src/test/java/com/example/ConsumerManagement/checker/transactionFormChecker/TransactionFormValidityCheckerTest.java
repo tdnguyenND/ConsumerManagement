@@ -44,9 +44,9 @@ class TransactionFormValidityCheckerTest {
     }
 
     @Test
-    void amountOfMoneyIs0(){
-        transaction.setAmountOfMoney(0.0);
-        assertTrue(transactionFormValidityChecker.satisfy());
+    void amountOfMoneyIsNull(){
+        transaction.setAmountOfMoney(null);
+        assertFalse(transactionFormValidityChecker.satisfy());
     }
 
     @Test

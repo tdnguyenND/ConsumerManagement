@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class FundTreasurerAuthenticityChecker extends FundAuthenticityChecker {
+public class NotATreasurerOfFundChecker extends FundAuthenticityChecker {
     @Autowired
     FundService fundService;
 
     @Override
     public boolean satisfy() {
         String owner = fundService.findById(fundId).get().getOwner();
-        return owner.equals(username) && super.satisfy();
+        return !owner.equals(username) && super.satisfy();
     }
 }

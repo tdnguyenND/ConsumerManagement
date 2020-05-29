@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class FundMemberAuthenticityChecker extends FundAuthenticityChecker {
+public class NotAMemberOfFundChecker extends FundAuthenticityChecker {
     @Autowired
     UserFundService userFundService;
 
     @Override
     public boolean satisfy() {
-        return isMember(this.username, this.fundId) && super.satisfy();
+        return !isMember(this.username, this.fundId) && super.satisfy();
     }
 
     boolean isMember(String username, int fundId){
