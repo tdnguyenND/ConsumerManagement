@@ -39,4 +39,9 @@ public class FundServiceImpl implements FundService {
     public void changeOwner(Integer fundId, String newOwner) {
         fundRepository.changeOwner(fundId, newOwner);
     }
+
+    @Override
+    public boolean isExist(Integer id) {
+        return fundRepository.existsById(id);
+    }
 }
