@@ -23,14 +23,15 @@ class DeleteFundControllerTest {
     void delete() throws Exception{
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        String uri = "/{fundId}";
-        MvcResult mvcResultDelete = mockMvc.perform(MockMvcRequestBuilders.delete(uri, "10"))
+        String uri = "/fund/{fundId}";
+        String fundId = "8";
+        MvcResult mvcResultDelete = mockMvc.perform(MockMvcRequestBuilders.delete(uri, fundId))
                 .andReturn();
 
         int statusCode = mvcResultDelete.getResponse().getStatus();
         assertEquals(200, statusCode);
 
-        MvcResult mvcResultFind = mockMvc.perform(MockMvcRequestBuilders.get(uri, "10"))
+        MvcResult mvcResultFind = mockMvc.perform(MockMvcRequestBuilders.get(uri, fundId))
                 .andReturn();
         String content = mvcResultFind.getResponse().getContentAsString();
         assertEquals(content, "null");

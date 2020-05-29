@@ -21,12 +21,13 @@ class GetFundInfomationControllerTest {
     WebApplicationContext webApplicationContext;
 
     protected MockMvc mock;
+    private String uri = "/fund/{fundId}";
     @Test
     void getInfo() throws Exception {
         mock = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        String uri = "/{fundId}";
         MvcResult mvcResult = mock.perform(MockMvcRequestBuilders.get(uri, "10"))
                 .andReturn();
+
         int statusCode = mvcResult.getResponse().getStatus();
         assertEquals(200, statusCode);
         String content = mvcResult.getResponse().getContentAsString();
@@ -36,9 +37,9 @@ class GetFundInfomationControllerTest {
     @Test
     void getAnObjNotExist() throws Exception {
         mock = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        String uri = "/{fundId}";
         MvcResult mvcResult = mock.perform(MockMvcRequestBuilders.get(uri, "-1"))
                 .andReturn();
+
         int statusCode = mvcResult.getResponse().getStatus();
         assertEquals(200, statusCode);
         String content = mvcResult.getResponse().getContentAsString();

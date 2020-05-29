@@ -10,22 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
-@Controller
+@RestController
 public class CreateFundController {
     @Autowired
     private FundService fundService;
 
     @PostMapping("/fund")
-    public @ResponseBody Fund create(HttpServletRequest seq, HttpServletResponse res) {
+    public Fund create(@ModelAttribute("Fund") Fund fund) {
         LocalDate dateNow = LocalDate.now();
         String dateOfCreation = dateNow.toString();
-
-        Fund fund = new Fund();
-        fund.setName(seq.getParameter("name"));
-        fund.setOwner(seq.getParameter("owner"));
         fund.setDateOfCreation(dateOfCreation);
-        if (seq.getParameter("balance") != null)
-            fund.setBalance(Double.parseDouble(seq.getParameter("balance")));
 
         return fundService.save(fund);
     }
