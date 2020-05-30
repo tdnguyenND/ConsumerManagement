@@ -1,8 +1,12 @@
 package com.example.ConsumerManagement.controllers.fund;
 
+import com.example.ConsumerManagement.controllers.ControllerAbstractTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -14,45 +18,52 @@ import javax.servlet.http.Cookie;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class DeleteFundControllerTest {
-    @Autowired
-    WebApplicationContext webApplicationContext;
+@Sql("/data.sql")
+class DeleteFundControllerTest extends ControllerAbstractTest {
 
-    protected MockMvc mockMvc;
-    private String uri = "/fund/{fundId}";
+    String uri;
+    String actor;
+    Integer fundId;
+
+    @BeforeEach
+    void init(){
+        setUp();
+        uri = "/fund/";
+        actor = "tdnguyen.uet";
+        fundId = 1;
+    }
 
     @Test
     void deleteFund() throws Exception{
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.delete(uri + fundId)
+                .cookie(new Cookie("username", actor))
+        ).andReturn().getResponse();
 
-        String uri = "/fund/{fundId}";
-        String fundId = "19";
-        MvcResult mvcResultDelete = mockMvc.perform(MockMvcRequestBuilders.delete(uri, fundId))
-                .andReturn();
-
-        int statusCode = mvcResultDelete.getResponse().getStatus();
+        int statusCode = response.getStatus();
         assertEquals(200, statusCode);
+        assertEquals("success", response.getContentAsString());
+    }
 
-        MvcResult mvcResultFind = mockMvc.perform(MockMvcRequestBuilders.get(uri, fundId))
-                .andReturn();
-        String content = mvcResultFind.getResponse().getContentAsString();
-        assertEquals(content, "null");
+    @Test
+    void deleteFund2() throws Exception {
+        actor = "user1";
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.delete(uri + fundId)
+                .cookie(new Cookie("username", actor))
+        ).andReturn().getResponse();
+
+        assertEquals(200, response.getStatus());
+        assertEquals("fail", response.getContentAsString());
     }
 
     @Test
     void deleteAFundNotExist() throws Exception{
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        fundId = -1;
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.delete(uri + fundId)
+                .cookie(new Cookie("username", actor))
+        ).andReturn().getResponse();
 
-        String fundId = "-1";
-        MvcResult mvcResultDelete = mockMvc.perform(MockMvcRequestBuilders.delete(uri, fundId))
-                .andReturn();
-
-        int statusCode = mvcResultDelete.getResponse().getStatus();
+        int statusCode = response.getStatus();
         assertEquals(200, statusCode);
-
-        MvcResult mvcResultFind = mockMvc.perform(MockMvcRequestBuilders.get(uri, fundId))
-                .andReturn();
-        String content = mvcResultFind.getResponse().getContentAsString();
-        assertEquals(content, "Obj not exist");
+        assertEquals("fail", response.getContentAsString());
     }
 }

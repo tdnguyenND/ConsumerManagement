@@ -76,8 +76,6 @@ class FundServiceTest {
         String newOwner = "user1";
         fundService.changeOwner(1, newOwner);
         assertEquals(fundService.findOwnerByFundId(1), newOwner);
-<<<<<<< HEAD
-=======
     }
 
     @Test
@@ -85,6 +83,5 @@ class FundServiceTest {
     void isExist() {
         assertTrue(fundService.isExist(1));
         assertFalse(fundService.isExist(-1));
->>>>>>> master
     }
 }
