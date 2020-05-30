@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@Scope("prototype")
 public class DeleteMemberController extends InteractiveController {
     @Autowired
     UserFundService userFundService;

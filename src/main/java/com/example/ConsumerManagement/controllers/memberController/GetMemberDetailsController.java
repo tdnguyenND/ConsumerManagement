@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@Scope("prototype")
 public class GetMemberDetailsController extends InteractiveController {
     @Autowired
     FundMemberAuthenticityChecker actorIsMember;
