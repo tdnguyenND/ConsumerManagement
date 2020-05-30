@@ -1,46 +1,57 @@
 package com.example.ConsumerManagement.controllers.transaction;
 
+import com.example.ConsumerManagement.controllers.ControllerAbstractTest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.servlet.http.Cookie;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class GetTransactionInfoControllerTest {
-    @Autowired
-    WebApplicationContext webApplicationContext;
+class GetTransactionInfoControllerTest extends ControllerAbstractTest {
+    private String uri = "/{fundId}/transaction/{transactionId}";
+    Integer fundId;
+    Integer transactionId;
+    String actor;
 
-    protected MockMvc mock;
-    private String uri = "/transaction/{transactionId}";
+    @BeforeEach
+    void init(){
+        setUp();
+        fundId = 1;
+        transactionId = 1;
+        actor = "tdnguyen.uet";
+    }
 
     @Test
     void getInfo() throws Exception {
-        mock = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        MvcResult mvcResult = mock.perform(MockMvcRequestBuilders.get(uri, "6"))
-                .andReturn();
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.get(uri, fundId, transactionId)
+                .cookie(new Cookie("username", actor))
+        ).andReturn().getResponse();
 
-        int statusCode = mvcResult.getResponse().getStatus();
-        assertEquals(200, statusCode);
-        String content = mvcResult.getResponse().getContentAsString();
+        assertEquals(200, response.getStatus());
 
-        assertTrue(content.matches("\\{\"transactionId\":\\d+,\"fundId\":5,\"name\":\"tien nha\",\"type\":\"reduce\",\"actor\":\"Trinh Trang\",\"amountOfMoney\":1000000.0,\"note\":\"chat vcl\",\"dateOfCreation\":\"2020-05-29\"}"));
+        assertEquals("{\"transactionId\":1,\"fundId\":1,\"name\":\"buy something\",\"type\":\"reduce\",\"actor\":\"tdnguyen.uet\",\"amountOfMoney\":10.0,\"note\":\"buy y * x\",\"dateOfCreation\":\"2005-03-03\"}"
+                , response.getContentAsString());
     }
 
     @Test
     void getAnObjNotExist() throws Exception {
-        mock = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        MvcResult mvcResult = mock.perform(MockMvcRequestBuilders.get(uri, "-1"))
-                .andReturn();
-        
-        int statusCode = mvcResult.getResponse().getStatus();
-        assertEquals(200, statusCode);
-        String content = mvcResult.getResponse().getContentAsString();
-        assertEquals(content, "null");
+        transactionId = -1;
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.get(uri, fundId, transactionId)
+                .cookie(new Cookie("username", actor))
+        ).andReturn().getResponse();
+
+        assertEquals(200, response.getStatus());
+        assertEquals("Fail to get transaction", response.getContentAsString());
     }
 }
