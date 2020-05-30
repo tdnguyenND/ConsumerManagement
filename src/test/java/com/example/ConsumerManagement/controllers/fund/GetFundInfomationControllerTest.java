@@ -23,7 +23,7 @@ class GetFundInfomationControllerTest {
     protected MockMvc mock;
     private String uri = "/fund/{fundId}";
     @Test
-    void getInfo() throws Exception {
+    void getFundInfo() throws Exception {
         mock = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         MvcResult mvcResult = mock.perform(MockMvcRequestBuilders.get(uri, "10"))
                 .andReturn();

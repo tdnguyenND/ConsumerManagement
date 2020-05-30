@@ -16,10 +16,12 @@ public class CreateFundController {
     private FundService fundService;
 
     @PostMapping("/fund")
-    public Fund create(@ModelAttribute("Fund") Fund fund) {
+    public Fund create(@ModelAttribute("Fund") Fund fund, @CookieValue String owner) {
         LocalDate dateNow = LocalDate.now();
         String dateOfCreation = dateNow.toString();
         fund.setDateOfCreation(dateOfCreation);
+
+        fund.setOwner(owner);
 
         return fundService.save(fund);
     }
