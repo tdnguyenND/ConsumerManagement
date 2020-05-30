@@ -1,74 +1,86 @@
 package com.example.ConsumerManagement.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import com.example.ConsumerManagement.config.WebConfig;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = WebConfig.class)
+@WebAppConfiguration
 @SpringBootTest
-public class LoginControllerTest  {
-    MockMvc mockMvc;
-
-    ObjectMapper objectMapper;
+public class LoginControllerTest {
 
     @Autowired
-    WebApplicationContext webApplicationContext;
+    private WebApplicationContext wac;
+    private MockMvc mockMvc;
 
-    @BeforeEach
-    void init(){
-        objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new Jdk8Module());
+    @Before
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
     @Test
-    void loginTest() throws Exception {
-        String uri = "/login";
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(uri)).andReturn();
+    public void loginTest() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/login"))
+                            .andExpect(model().attributeExists("account"));
+    }
 
-        int status = mvcResult.getResponse().getStatus();
-        assertEquals(200,status);
+    @Test
+    public  void processLoginTest() throws Exception{
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/login")
+                             .param("username","user1")
+                             .param("password","password1"))
+                             .andExpect(status().isOk())
+                             .andExpect(view().name("homePage"));
 
     }
 
     @Test
-    public void processloginTest1() throws Exception{
-        String uri = "/login";
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri)
-                .param("username", "user1")
-                .param("password", "password1")).andReturn();
+    public  void processLoginTest1() throws Exception{
 
-        int status = mvcResult.getResponse().getStatus();
-        assertEquals(200,status);
-        String content = mvcResult.getResponse().getContentAsString();
-        assertEquals(content,"success");
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/login")
+                .param("username","user")
+                .param("password","password")).andExpect(status().isOk())
+                .andExpect(model().attributeExists("error"))
+                .andExpect(view().name("loginPage"));
+
     }
 
     @Test
-    public void processloginTest() throws Exception{
-        String uri = "/login";
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri)
-                .param("username", "user1")
-                .param("password", "password")).andReturn();
+    public  void processLoginTest2() throws Exception{
 
-        int status = mvcResult.getResponse().getStatus();
-        assertEquals(200,status);
-        String content = mvcResult.getResponse().getContentAsString();
-        assertEquals(content,"fail");
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/login")
+                .param("username","user10")
+                .param("password","password")).andExpect(status().isOk())
+                .andExpect(model().attributeExists("error"))
+                .andExpect(model().attribute("error","username not exists"))
+                .andExpect(view().name("loginPage"));
+
     }
 
+    @Test
+    public  void processLoginTest3() throws Exception{
 
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/login")
+                .param("username","user1")
+                .param("password","password")).andExpect(status().isOk())
+                .andExpect(model().attributeExists("error"))
+                .andExpect(model().attribute("error","password not match with username"))
+                .andExpect(view().name("loginPage"));
+
+    }
 
 }

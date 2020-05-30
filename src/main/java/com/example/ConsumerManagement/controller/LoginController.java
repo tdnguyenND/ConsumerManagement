@@ -19,15 +19,20 @@ public class LoginController {
     @Autowired
     AccountService accountService;
 
+    @RequestMapping(value = "/")
+    public String home(){
+        return "home";
+    }
+
     @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String login (Model model){
+    public String   login (Model model){
         model.addAttribute("error",new String());
         model.addAttribute("account",new Account());
         return "loginPage";
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public ModelAndView processLogin (@ModelAttribute("account") Account account, HttpServletResponse response){
+    public  ModelAndView processLogin (@ModelAttribute("account") Account account, HttpServletResponse response){
 
         ModelAndView model = new ModelAndView();
 
