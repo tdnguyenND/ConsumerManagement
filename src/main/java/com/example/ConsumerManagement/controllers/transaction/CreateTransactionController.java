@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
@@ -23,12 +20,13 @@ public class CreateTransactionController {
     TransactionService transactionService;
 
     @PostMapping(value = "/transaction", consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> create(@ModelAttribute("transaction") Transaction transaction, HttpServletResponse res){
+    public ResponseEntity<?> create(@ModelAttribute(value = "transaction") Transaction transaction, @CookieValue("actor") String actor){
         LocalDate dateNow = LocalDate.now();
         String dateOfCreation = dateNow.toString();
 
         transaction.setDateOfCreation(dateOfCreation);
+        transaction.setActor(actor);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.save(transaction));
+        return ResponseEntity.status(HttpStatus.OK).body(transactionService.save(transaction));
     }
 }
