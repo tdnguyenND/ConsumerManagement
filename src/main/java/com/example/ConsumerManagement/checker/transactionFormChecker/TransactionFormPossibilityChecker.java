@@ -5,9 +5,11 @@ import com.example.ConsumerManagement.services.FundService;
 import com.example.ConsumerManagement.services.UserFundService;
 import com.example.ConsumerManagement.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class TransactionFormPossibilityChecker extends TransactionFormChecker {
     @Autowired
     FundService fundService;
@@ -23,7 +25,7 @@ public class TransactionFormPossibilityChecker extends TransactionFormChecker {
         Fund fund = fundService.findById(transaction.getFundId()).get();
         return transaction.getAmountOfMoney() <= fund.getBalance() &&
                 userService.findById(transaction.getActor()).isPresent() &&
-                userInFund(transaction.getActor(), transaction.getFundId());
+                userInFund(transaction.getActor(), transaction.getFundId()) && super.satisfy();
     }
 
     private boolean userInFund(String username, int fundId){

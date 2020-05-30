@@ -37,6 +37,12 @@ class FundFormValidityCheckerTest {
     }
 
     @Test
+    void balanceIsNull(){
+        fund.setBalance(null);
+        assertFalse(fundFormValidityChecker.satisfy());
+    }
+
+    @Test
     void ownerIsNull(){
         fund.setOwner(null);
         assertFalse(fundFormValidityChecker.satisfy());

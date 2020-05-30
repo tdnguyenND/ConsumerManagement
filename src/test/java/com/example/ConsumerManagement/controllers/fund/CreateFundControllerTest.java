@@ -1,35 +1,104 @@
 package com.example.ConsumerManagement.controllers.fund;
 
+import com.example.ConsumerManagement.controllers.ControllerAbstractTest;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class CreateFundControllerTest extends CreateFundController {
-    @Autowired
-    WebApplicationContext webApplicationContext;
+@Sql("/data.sql")
+public class CreateFundControllerTest extends ControllerAbstractTest {
+    String uri;
+    String name;
+    Double balance;
+    String owner;
 
-    protected MockMvc mockMvc;
+    @BeforeEach
+    void init(){
+        setUp();
+        uri = "/fund";
+        name = "Sinh hoat hang thang";
+        balance = 2000000.0;
+        owner = "user1";
+    }
 
     @Test
     public void creatFundTest() throws Exception{
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/fund")
-                .param("name", "Sinh hoat hang thang")
-                .param("owner", "Trinh Thi Thu Trang")
-                .param("balance", "2000000")).andReturn();
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .param("name", name)
+                .param("balance", String.valueOf(balance))
+                .cookie(new Cookie("owner", owner))
+        ).andReturn().getResponse();
 
-        int statusCode = mvcResult.getResponse().getStatus();
+        int statusCode = response.getStatus();
         assertEquals(200, statusCode);
-        String content = mvcResult.getResponse().getContentAsString();
-        assertTrue(content.matches("\\{\"fundId\":\\d+,\"name\":\"Sinh hoat hang thang\",\"owner\":\"Trinh Thi Thu Trang\",\"dateOfCreation\":\"2020-05-28\",\"balance\":2000000.0}"));
+        String content = response.getContentAsString();
+        assertEquals("success", content);
     }
+
+    @Test
+    public void createFundWithoutName() throws Exception{
+        name = null;
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .param("name", name)
+                .cookie(new Cookie("owner", owner))
+                .param("balance", String.valueOf(balance))
+        ).andReturn().getResponse();
+
+        int statusCode = response.getStatus();
+        assertEquals(200, statusCode);
+    }
+
+    @Test
+    public void createFundWithoutBalance() throws Exception{
+        balance = null;
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .param("name", name)
+                .param("balance", String.valueOf(balance))
+                .cookie(new Cookie("owner", owner))
+        ).andReturn().getResponse();
+
+        assertEquals(400, response.getStatus());
+    }
+
+    @Test
+    public void createFundWithBalanceIsNegative() throws Exception{
+        balance = -1.0;
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .param("name", name)
+                .cookie(new Cookie("owner", owner))
+                .param("balance", String.valueOf(balance))
+        ).andReturn().getResponse();
+
+        assertEquals(200, response.getStatus());
+        assertEquals("fail", response.getContentAsString());
+    }
+
+
+    @Test
+    public void createFundWithoutOwner() throws Exception{
+        MockHttpServletResponse response = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .param("name", name)
+                .param("balance", String.valueOf(balance))
+        ).andReturn().getResponse();
+
+        assertEquals(400, response.getStatus());
+    }
+
 }

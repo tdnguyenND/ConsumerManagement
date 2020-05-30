@@ -1,4 +1,4 @@
-package com.example.ConsumerManagement.checker.fundAuthenticityChecker;
+package com.example.ConsumerManagement.checker.fundChecker;
 
 import com.example.ConsumerManagement.services.FundService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class FundTreasurerAuthenticityChecker extends FundAuthenticityChecker {
+public class FundExistChecker extends FundChecker {
     @Autowired
     FundService fundService;
 
     @Override
     public boolean satisfy() {
-        String owner = fundService.findById(fundId).get().getOwner();
-        return owner.equals(username) && super.satisfy();
+        return fundService.isExist(fundId) && super.satisfy();
     }
 }
