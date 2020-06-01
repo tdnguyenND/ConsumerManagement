@@ -38,7 +38,7 @@ public class AccountServiceTest {
     @Test
     public void findById1() throws JsonProcessingException {
         Optional<Account> optional = accountService.findById("user10");
-        assertEquals(null,mapper.writeValueAsString(optional));
+        assertEquals("null",mapper.writeValueAsString(optional));
     }
 
 

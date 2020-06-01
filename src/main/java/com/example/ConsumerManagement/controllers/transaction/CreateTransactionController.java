@@ -70,6 +70,7 @@ public class CreateTransactionController extends AbstractAuthenticationRequiredC
         LocalDate dateNow = LocalDate.now();
         String dateOfCreation = dateNow.toString();
         transaction.setDateOfCreation(dateOfCreation);
+        transaction.setActor(actor);
 
         transaction.setActor(actor);
         transaction.setFundId(fundId);
