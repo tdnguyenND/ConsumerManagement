@@ -33,4 +33,9 @@ public class TransactionServiceImpl implements TransactionService {
     public Iterable<Transaction> findAllByFundId(int fundId) {
         return transactionRepository.findAllByFundId(fundId);
     }
+
+    @Override
+    public boolean existById(Integer transactionId) {
+        return transactionRepository.existsById(transactionId);
+    }
 }

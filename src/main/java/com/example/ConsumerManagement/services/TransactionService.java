@@ -12,4 +12,6 @@ public interface TransactionService {
     void deleteByFundId(int fundId);
 
     Iterable<Transaction> findAllByFundId(int fundId);
+
+    boolean existById(Integer transactionId);
 }
