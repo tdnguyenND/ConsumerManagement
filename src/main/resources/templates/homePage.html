@@ -1,8 +1,35 @@
 <html >
 <head>
     <title>home</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <div>Hello world!</div>
+<ul id="fund-list">
+	
+</ul>
+<script>
+    axios({
+    	method:'get',
+    	url:'http://localhost:8080/fund/getAll'
+    })
+    .then(res => {
+    	res.data.forEach(fundId=>{
+    		axios({
+    			method:'get',
+    			url:'http://localhost:8080/fund/' + fundId
+    		}).then(response=>{
+    			render(response.data)
+    		})
+    	})
+    });
+    const fundList = document.getElementById('fund-list');
+
+    function render(fundInfo){
+    	let li = document.createElement('li');
+    	fundList.appendChild(li);
+    	li.innerHTML = fundInfo.name;
+    }
+</script>
 </body>
 </html>
