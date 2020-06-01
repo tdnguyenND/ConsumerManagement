@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Manager</title>
+    <link rel="stylesheet" href="main.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</head>
+
+<body>
+<header class="fixed-top">
+    <div class="header-top"></div>
+    <div class="header-content">
+        <img class="logo" src="./images/preview1-removebg.png" alt="">
+        <div class="acount">
+            <span class="acount-text">Trang Trịnh Thị Thu</span>
+            <span id="drop-menu-btn">
+                    <i class="fas fa-angle-down"></i>
+                </span>
+        </div>
+    </div>
+    <div id="dropdown-content" class="list-group dropdown-content fixed-top border rounded" style="display: none;">
+        <div class="container">
+            <div class="row border-bottom">
+                <div class="col-3 col">
+                    <i class="far fa-edit"></i>
+                </div>
+                <div class="col col">
+                    Chỉnh sửa
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-3 col">
+                    <i class="fas fa-sign-out-alt"></i>
+                </div>
+                <div class="col col">
+                    Đăng xuất
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div style="height: 80px;"></div>
+<section>
+    <div class="list-fund">
+        <div id="fund-0" class="fund-item">Quỹ há há</div>
+        <div class="fund-item">Quỹ lớp</div>
+        <div class="fund-item">Quỹ phòng ở kí tức xá</div>
+        <div id="fund-0" class="fund-item">Quỹ há há</div>
+        <div class="fund-item">Quỹ lớp</div>
+        <div class="fund-item">Quỹ phòng ở kí tức xá</div>
+        <div id="fund-0" class="fund-item">Quỹ há há</div>
+        <div class="fund-item">Quỹ lớp</div>
+        <div class="fund-item">Quỹ phòng ở kí tức xá</div>
+        <div id="fund-0" class="fund-item">Quỹ há há</div>
+        <div class="fund-item">Quỹ lớp</div>
+        <div class="fund-item">Quỹ phòng ở kí tức xá</div>
+    </div>
+</section>
+
+<div style="height: 30px;"></div>
+<button type="button" class="create-fund-btn btn btn-outline-primary rounded-circle" data-toggle="modal"
+        data-target="#exampleModal" data-whatever="@mdo" style="background-color: white;">
+    <i class="fas fa-plus"></i>
+</button>
+<!-- Create transaction form -->
+<div class="modal fade small" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tạo quỹ mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group mb-1">
+                        <label for="name" class="col-form-label">Tên quỹ:</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group mb-1">
+                        <label for="balance" class="col-form-label">Số tiền ban đầu:</label>
+                        <input class="form-control" id="balance">
+                    </div>
+                    <div class="form-group mb-1">
+                        <label for="note" class="col-form-label">Ghi chú:</label>
+                        <textarea type="text" class="form-control" id="note"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary btn-sm">Tạo mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script>
+    var btnDown = $('#drop-menu-btn').click(function () {
+        var content = $('#dropdown-content')
+        if (content.css('display') == 'none') {
+            content.css('display', 'block')
+        } else {
+            content.css('display', 'none')
+        }
+    })
+</script>
+</body>
+
+</html>

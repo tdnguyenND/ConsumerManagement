@@ -1,0 +1,76 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+body{
+    font-family: 'Roboto', sans-serif !important;
+}
+/* header */
+header{
+    box-shadow: 0 0 5px rgb(102, 102, 102);
+    overflow: hidden;
+}
+.header-top{
+    height: 28px;
+    background-color: #035bb9;
+}
+.header-content{
+    padding: 8px;
+    font-size: 17px;
+    overflow: hidden;
+    background-color: #0f77e7;
+    color: white;
+}
+.info-of-fund--name{
+    font-size: 27px;
+    margin-bottom: 2px;
+}
+.info-of-fund--date{
+    font-size: 14px;
+    font-style: italic;
+    color: grey;
+}
+.info-of-fund--note, .info-of-fund--owner{
+    font-size: 16px;
+}
+.member-item{
+    color: #6c757d;
+    padding-top: 10px;
+}
+.member-item > img{
+    width: 32px;
+    width: 32px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+.member-item > p{
+    padding-bottom: 15px;
+    margin-bottom: 0px;
+}
+.error{
+    color: red;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 10px;
+}
+.success{
+    color: green;
+    font-size: 14px;
+    text-align: left;
+    padding-left: 10px;
+}
+.modal-header{
+    font-size: 20px;
+}
+.modal-body, .modal-footer{
+    font-size: 16px;
+}
+.add-member-btn{
+    position: fixed;
+    bottom: 30px;
+    right: 70px;
+}
+.borderless td, .borderless th {
+    border: none;
+}

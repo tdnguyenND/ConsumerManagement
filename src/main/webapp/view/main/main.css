@@ -1,0 +1,67 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+}
+body{
+    font-family: 'Roboto', sans-serif !important;
+}
+header{
+    overflow: hidden;
+}
+.header-content{
+    padding: 0px 8px 8px 8px;
+    height: 60px;
+    background-color: white;
+}
+.header-top{
+    height: 28px;
+    background-color: #035bb9;
+}
+.logo{
+    height: 60px;
+    float: left;
+}
+.acount{
+    font-size: 17px;
+    float: right;
+    display: flex;
+    align-items: center;
+    height: inherit;
+}
+.acount-text{
+    width: 100px;
+}
+.dropdown-content{
+    width: 180px;
+    margin-left: auto;
+    margin-top: 90px;
+    background-color: white;
+    font-size: 17px;
+}
+.dropdown-content .row{
+    padding: 10px 0px;
+}
+section{
+    width: 70%;
+    margin: 0 auto;
+}
+.fund-item{
+    height: 50px;
+    background-image: linear-gradient(to right,rgb(0, 123, 255), rgb(56, 143, 236));
+    border-radius: 10px;
+    margin: 20px auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    color: white;
+    font-size: 17px;
+}
+
+.create-fund-btn{
+    position: fixed;
+    bottom: 30px;
+    right: 70px;
+    background-color: white;
+}
