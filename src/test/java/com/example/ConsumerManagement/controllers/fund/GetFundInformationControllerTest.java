@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Sql("/data.sql")
-class GetFundInfomationControllerTest extends ControllerAbstractTest {
+class GetFundInformationControllerTest extends ControllerAbstractTest {
 
     String uri;
     String actor;

@@ -3,12 +3,9 @@ package com.example.ConsumerManagement.controllers.loginController;
 
 import com.example.ConsumerManagement.models.persistence.entities.Account;
 import com.example.ConsumerManagement.services.AccountService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -34,7 +31,7 @@ public class LoginController {
         }
 
         if (username != null && accountService.findById(username).isPresent()) redirect("/home", response);
-        return "loginPage";
+        return "login";
     }
 
     @PostMapping(value = "/login")

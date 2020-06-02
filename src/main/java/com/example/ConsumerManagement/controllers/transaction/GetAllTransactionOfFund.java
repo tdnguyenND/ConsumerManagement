@@ -7,6 +7,7 @@ import com.example.ConsumerManagement.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,15 +40,18 @@ public class GetAllTransactionOfFund extends AbstractAuthenticationRequiredContr
     }
 
     @GetMapping("/{fundId}/transaction/getAll")
-    public @ResponseBody Object getAllTransaction(@PathVariable("fundId")Integer fundId,
-                             @CookieValue("username")String actor){
+    public String getAllTransaction(@PathVariable("fundId")Integer fundId,
+                                    @CookieValue("username")String actor,
+                                    Model model){
         if (checker == null) initChecker();
 
         initCheckerParams(fundId, actor);
 
-        if (!checker.satisfy()) return "Fail to get all transaction";
+        if (!checker.satisfy()) return null;
 
-        return transactionService.findAllByFundId(fundId);
+        model.addAttribute("transactions", transactionService.findAllByFundId(fundId));
+
+        return "fund";
     }
 
     private void initCheckerParams(Integer fundId, String actor) {

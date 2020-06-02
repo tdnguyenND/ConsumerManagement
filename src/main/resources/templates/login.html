@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" th:href="@{css/login.css}"/>
     <title>Login</title>
 </head>
 <body>
@@ -13,22 +16,22 @@
             <h1>Đăng nhập</h1>
         </div>
 
-        <div class="login-form">
+        <form action="/login" method="post" class="login-form">
             <div class="control-group">
-                <input type="text" class="login-field" value="" placeholder="Tên tài khoản" id="login-name">
+                <input type="text" class="login-field" value="" placeholder="Tên tài khoản" id="login-name" name="username">
                 <label class="login-field-icon fui-user" for="login-name"></label>
                 <p class="error"></p>
             </div>
 
             <div class="control-group">
-                <input type="password" class="login-field" value="" placeholder="Nhập mật khẩu" id="login-pass">
+                <input type="password" class="login-field" value="" placeholder="Nhập mật khẩu" id="login-pass" name="password">
                 <label class="login-field-icon fui-lock" for="login-pass"></label>
                 <p class="error"></p>
             </div>
 
-            <a class="btn btn-primary btn-large btn-block" href="#">Đăng nhập</a>
+            <button type="submit" class="btn btn-primary btn-large btn-block">Đăng nhập</button>
             <a class="login-link" href="#">Bạn chưa có tài khoản?</a>
-        </div>
+        </form>
     </div>
 </div>
 </body>

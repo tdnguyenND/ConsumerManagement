@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Money Manager</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" th:href="@{css/main.css}">
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -18,9 +21,8 @@
 <header class="fixed-top">
     <div class="header-top"></div>
     <div class="header-content">
-        <img class="logo" src="./images/preview1-removebg.png" alt="">
-        <div class="acount">
-            <span class="acount-text">Trang Trịnh Thị Thu</span>
+        <div class="account">
+            <span id="user" class="account-text"></span>
             <span id="drop-menu-btn">
                     <i class="fas fa-angle-down"></i>
                 </span>
@@ -48,20 +50,12 @@
     </div>
 </header>
 <div style="height: 80px;"></div>
-<section>
-    <div class="list-fund">
-        <div id="fund-0" class="fund-item">Quỹ há há</div>
-        <div class="fund-item">Quỹ lớp</div>
-        <div class="fund-item">Quỹ phòng ở kí tức xá</div>
-        <div id="fund-0" class="fund-item">Quỹ há há</div>
-        <div class="fund-item">Quỹ lớp</div>
-        <div class="fund-item">Quỹ phòng ở kí tức xá</div>
-        <div id="fund-0" class="fund-item">Quỹ há há</div>
-        <div class="fund-item">Quỹ lớp</div>
-        <div class="fund-item">Quỹ phòng ở kí tức xá</div>
-        <div id="fund-0" class="fund-item">Quỹ há há</div>
-        <div class="fund-item">Quỹ lớp</div>
-        <div class="fund-item">Quỹ phòng ở kí tức xá</div>
+<section id="list-fund">
+    <div th:each="fund: ${fundList}">
+        <a th:href="${'../' + fund.fundId + '/transaction/getAll'}">
+            <div class="fund-item" th:text="${fund.name}">
+            </div>
+        </a>
     </div>
 </section>
 
@@ -70,7 +64,7 @@
         data-target="#exampleModal" data-whatever="@mdo" style="background-color: white;">
     <i class="fas fa-plus"></i>
 </button>
-<!-- Create transaction form -->
+<!-- Create fund form -->
 <div class="modal fade small" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -114,16 +108,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"
+        type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 <script>
-    var btnDown = $('#drop-menu-btn').click(function () {
-        var content = $('#dropdown-content')
-        if (content.css('display') == 'none') {
-            content.css('display', 'block')
-        } else {
-            content.css('display', 'none')
-        }
-    })
+    $('#user').html($.cookie('username'))
 </script>
 </body>
 
