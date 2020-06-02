@@ -23,12 +23,13 @@ public class LoginController {
     @GetMapping(value = "/login")
     public String login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = null;
-        for (Cookie cookie: request.getCookies()){
-            if (cookie.getName().equals("username")) {
-                username = cookie.getValue();
-                break;
+        if (request.getCookies() != null)
+            for (Cookie cookie: request.getCookies()){
+                if (cookie.getName().equals("username")) {
+                    username = cookie.getValue();
+                    break;
+                }
             }
-        }
 
         if (username != null && accountService.findById(username).isPresent()) redirect("/home", response);
         return "login";

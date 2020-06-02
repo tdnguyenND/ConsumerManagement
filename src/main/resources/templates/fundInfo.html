@@ -38,11 +38,13 @@
 <div style="height: 3px; background-color: rgb(179, 176, 176); box-shadow: 1px 0px 2px rgb(109, 108, 108);"></div>
 <section class="my-3 p-3 bg-white rounded box-shadow member-list">
     <h6 class="border-bottom border-gray pb-2 mb-0">Danh sách thành viên</h6>
-    <div id="list-members" th:each="member: ${members}">
-        <div class="media member-item" data-toggle="modal" data-target="#exampleModalCenter">
-            <p class="media-body small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark" th:text="${member}"></strong>
-            </p>
+    <div id="list-members">
+        <div th:each="member: ${members}">
+            <div class="media member-item" data-toggle="modal" data-target="#exampleModalCenter" th:attr="data-username=${member}">
+                <p class="media-body small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark" th:text="${member}"></strong>
+                </p>
+            </div>
         </div>
     </div>
 </section>
@@ -60,32 +62,29 @@
             <div class="modal-body">
                 <table class="table borderless">
                     <tbody>
-                    <tr>
-                        <td><strong>Tên</strong></td>
-                        <td>Trịnh Trang</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Số điện thoại</strong></td>
-                        <td>0978924372</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Giới tính</strong></td>
-                        <td>Nữ</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Email</strong></td>
-                        <td>trinhtrang27112000@gmail.com</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ngày tham gia</strong></td>
-                        <td>Thứ 7 30-5-2020</td>
-                    </tr>
+                        <tr id="member-username" style="display: none;"></tr>
+                        <tr>
+                            <td><strong>Tên</strong></td>
+                            <td id="member-name"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Số điện thoại</strong></td>
+                            <td id="member-phoneNumber"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Giới tính</strong></td>
+                            <td id="member-gender"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email</strong></td>
+                            <td id="member-email"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button btn-sm" class="btn btn-danger" data-dismiss="modal">Xóa</button>
-                <button type="button btn-sm" class="btn btn-primary">Chuyển quyền</button>
+                <button id="delete-member" type="button" class="btn btn-danger" data-dismiss="modal">Xóa</button>
+                <button id="transfer-treasurer" type="button" class="btn btn-primary">Chuyển quyền</button>
             </div>
         </div>
     </div>
@@ -109,13 +108,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <input type="text" class="form-control" id="name" placeholder="Tên người dùng">
+                <form id="add-member-form">
+                    <input type="text" class="form-control" id="member-to-add" name="username" placeholder="Tên người dùng">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Thêm</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary btn-sm">Thêm</button>
             </div>
         </div>
     </div>
@@ -130,7 +129,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+<script th:src="@{../js/memberBehavior/DeleteMemberRequest.js}"></script>
+<script th:src="@{../js/memberBehavior/TransferTreasurerRequest.js}"></script>
+<script th:src="@{../js/memberBehavior/AddMemberRequest.js}"></script>
+<script th:src="@{../js/memberBehavior/GetMemberDetailsRequest.js}"></script>
+<script th:src="@{../js/fundInfo.js}"></script>
 </body>
 
 </html>
