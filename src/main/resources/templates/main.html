@@ -76,24 +76,19 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="fund-form">
                     <div class="form-group mb-1">
                         <label for="name" class="col-form-label">Tên quỹ:</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group mb-1">
                         <label for="balance" class="col-form-label">Số tiền ban đầu:</label>
-                        <input class="form-control" id="balance">
+                        <input class="form-control" id="balance" name="balance">
                     </div>
-                    <div class="form-group mb-1">
-                        <label for="note" class="col-form-label">Ghi chú:</label>
-                        <textarea type="text" class="form-control" id="note"></textarea>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">Tạo mới</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary btn-sm">Tạo mới</button>
             </div>
         </div>
     </div>
@@ -114,6 +109,8 @@
 <script>
     $('#user').html($.cookie('username'))
 </script>
+<script th:src="@{../js/fundBehavior/CreateFundRequest.js}"></script>
+<script th:src="@{../js/main.js}"></script>
 </body>
 
 </html>

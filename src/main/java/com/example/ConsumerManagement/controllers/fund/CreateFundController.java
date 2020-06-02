@@ -4,7 +4,10 @@ import com.example.ConsumerManagement.checker.fundFormChecker.FundFormPossibilit
 import com.example.ConsumerManagement.checker.fundFormChecker.FundFormValidityChecker;
 import com.example.ConsumerManagement.controllers.AbstractAuthenticationRequiredController;
 import com.example.ConsumerManagement.models.persistence.entities.Fund;
+import com.example.ConsumerManagement.models.persistence.relationships.UserFund;
+import com.example.ConsumerManagement.models.persistence.relationships.UserFundKey;
 import com.example.ConsumerManagement.services.FundService;
+import com.example.ConsumerManagement.services.UserFundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,9 @@ import java.time.LocalDate;
 public class CreateFundController extends AbstractAuthenticationRequiredController {
     @Autowired
     private FundService fundService;
+
+    @Autowired
+    UserFundService userFundService;
 
     @Autowired
     FundFormValidityChecker validityChecker;
@@ -39,7 +45,7 @@ public class CreateFundController extends AbstractAuthenticationRequiredControll
 
     @PostMapping("/fund")
     public @ResponseBody String create(@ModelAttribute("Fund") Fund fund,
-                                       @CookieValue("owner") String owner) {
+                                       @CookieValue("username") String owner) {
 
         if (checker == null) initChecker();
 
@@ -52,7 +58,14 @@ public class CreateFundController extends AbstractAuthenticationRequiredControll
         initCheckerParams(fund, owner);
 
         if (!checker.satisfy()) return "fail";
-        fundService.save(fund);
+        fund = fundService.save(fund);
+
+        UserFund userFund = new UserFund();
+        userFund.setFundId(fund.getFundId());
+        userFund.setUsername(owner);
+        userFund.setDateOfParticipant(dateOfCreation);
+
+        userFundService.save(userFund);
         return "success";
     }
 

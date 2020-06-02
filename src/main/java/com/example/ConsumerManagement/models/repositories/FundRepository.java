@@ -12,4 +12,8 @@ public interface FundRepository extends CrudRepository<Fund, Integer> {
     @Modifying
     @Query(value = "update Fund set owner = :newOwner where fundId = :fundId")
     void changeOwner(int fundId, String newOwner);
+
+    @Modifying
+    @Query("update Fund set balance = :balance where fundId = :fundId")
+    void updateBalance(int fundId, double balance);
 }

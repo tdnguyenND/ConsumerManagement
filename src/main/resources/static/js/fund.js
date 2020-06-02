@@ -25,7 +25,18 @@ $('#leave-fund').click(event=>{
    leaveFund(fundId).then(response=>{
        if (response.data === 'fail') alert('You can not leave this fund now!');
        else {
-           window.location = window.location.hostname + '/home';
+           window.location.href = window.location.origin + '/home';
        }
    })
 });
+
+$('#delete-fund').click(event=>{
+    event.preventDefault();
+    deleteFund(fundId)
+        .then(response=>{
+            if (response.data === 'fail') alert('Cannot delete this fund!')
+            else{
+                window.location.href = window.location.origin + '/home';
+            }
+        })
+})

@@ -9,6 +9,7 @@ import com.example.ConsumerManagement.checker.transactionFormChecker.Transaction
 import com.example.ConsumerManagement.controllers.AbstractAuthenticationRequiredController;
 import com.example.ConsumerManagement.models.persistence.entities.Fund;
 import com.example.ConsumerManagement.models.persistence.entities.Transaction;
+import com.example.ConsumerManagement.services.FundService;
 import com.example.ConsumerManagement.services.TransactionService;
 import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CreateTransactionController extends AbstractAuthenticationRequiredController {
     @Autowired
     TransactionService transactionService;
+
+    @Autowired
+    FundService fundService;
 
     @Autowired
     FundExistChecker fundExist;
@@ -80,6 +84,21 @@ public class CreateTransactionController extends AbstractAuthenticationRequiredC
         if (!checker.satisfy()) return "fail";
 
         transactionService.save(transaction);
+        Fund fund = fundService.findById(fundId).get();
+        double balance = fund.getBalance();
+        switch (transaction.getType()){
+            case "Reduce":
+            case "Giảm":{
+                balance -= transaction.getAmountOfMoney();
+                break;
+            }
+            case "Increase":
+            case "Tăng":{
+                balance += transaction.getAmountOfMoney();
+                break;
+            }
+        }
+        fundService.updateBalance(fundId, balance);
 
         return "success";
     }

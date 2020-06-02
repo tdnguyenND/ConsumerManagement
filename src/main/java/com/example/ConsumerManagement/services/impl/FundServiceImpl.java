@@ -44,4 +44,9 @@ public class FundServiceImpl implements FundService {
     public boolean isExist(Integer id) {
         return fundRepository.existsById(id);
     }
+
+    @Override
+    public void updateBalance(Integer fundId, Double balance) {
+        fundRepository.updateBalance(fundId, balance);
+    }
 }

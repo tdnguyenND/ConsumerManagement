@@ -16,4 +16,6 @@ public interface FundService {
     void changeOwner(Integer fundId, String newOwner);
 
     boolean isExist(Integer id);
+
+    void updateBalance(Integer fundId, Double balance);
 }
